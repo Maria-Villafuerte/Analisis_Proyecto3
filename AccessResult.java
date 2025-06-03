@@ -16,10 +16,10 @@ class AccessResult {
      * Parámetros: elemento accedido, costo del acceso, configuración resultante de la lista
      */
     public AccessResult(int element, int cost, List<Integer> listConfig) {
-        // Asignar elemento accedido
-        // Asignar costo de acceso
-        // Crear copia de la configuración de lista
-        // Establecer moved = true (para MTF siempre se mueve)
+        this.element = element; // Asignar elemento accedido
+        this.cost = cost; // Asignar costo de acceso
+        this.listConfig = new ArrayList<>(listConfig); // Crear copia de la configuración de lista
+        this.moved = true; // Establecer moved = true (para MTF siempre se mueve)
     }
     
     /**
@@ -28,9 +28,9 @@ class AccessResult {
      * Parámetros: elemento accedido, costo, configuración de lista, si fue movido o no
      */
     public AccessResult(int element, int cost, List<Integer> listConfig, boolean moved) {
-        // Asignar elemento accedido
-        // Asignar costo de acceso
-        // Crear copia de la configuración de lista
-        // Establecer flag moved según parámetro
+        this.element = element; // Asignar elemento accedido
+        this.cost = cost; // Asignar costo de acceso
+        this.listConfig = new ArrayList<>(listConfig); // Crear copia de la configuración de lista
+        this.moved = moved; // Establecer flag moved según parámetro
     }
 }

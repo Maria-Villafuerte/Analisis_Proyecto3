@@ -15,7 +15,10 @@ class MTFAlgorithm {
      * Propósito: Crear una nueva instancia del algoritmo con la configuración inicial
      */
     public MTFAlgorithm(List<Integer> initialList) {
-        // Inicializar variables de instancia
+      // Inicializar variables de instancia
+      this.initialList = new ArrayList<>(initialList);
+      this.accessHistory = new ArrayList<>();
+      reset();        
     }
     
     /**
@@ -23,7 +26,10 @@ class MTFAlgorithm {
      * Restablece la lista a su configuración original y limpia estadísticas
      */
     public void reset() {
-        // Restaurar lista original, limpiar costos y historial
+      // Restaurar lista original, limpiar costos y historial
+      this.currentList = new ArrayList<>(initialList);
+      this.totalCost = 0;
+      this.accessHistory.clear();
     }
     
     /**
@@ -32,12 +38,23 @@ class MTFAlgorithm {
      * Retorna: AccessResult con detalles del acceso
      */
     public AccessResult accessElement(int element) {
-        // Encontrar posición del elemento
-        // Calcular costo de acceso
-        // Mover elemento al frente
-        // Actualizar estadísticas
-        // Retornar resultado
-      return null;
+      if (!currentList.contains(element)) {
+          throw new IllegalArgumentException("Elemento " + element + " no está en la lista");
+      }
+      
+      // Encontrar la posición del elemento (1-indexado)
+      int position = currentList.indexOf(element) + 1;
+      int accessCost = position;
+      
+      // Mover el elemento al frente
+      currentList.remove(Integer.valueOf(element));
+      currentList.add(0, element);
+      
+      // Actualizar estadísticas
+      totalCost += accessCost;
+      AccessResult result = new AccessResult(element, accessCost, currentList);
+      accessHistory.add(result);
+      return result;
     }
     
     /**
@@ -47,11 +64,35 @@ class MTFAlgorithm {
      */
     public Map<String, Object> processSequence(List<Integer> sequence) {
         // Reiniciar algoritmo
+        reset();
+        List<AccessResult> results = new ArrayList<>();
+        
+        System.out.println("Lista inicial: " + currentList);
+        System.out.println("-".repeat(60));
+
         // Procesar cada elemento de la secuencia
-        // Mostrar resultados paso a paso
+        for (int i = 0; i < sequence.size(); i++) {
+            int element = sequence.get(i);
+            AccessResult result = accessElement(element);
+            // Mostrar resultados paso a paso
+            System.out.println("Solicitud " + (i + 1) + ": " + element);
+            System.out.println("Costo de acceso: " + result.cost);
+            System.out.println("Nueva configuración: " + result.listConfig);
+            System.out.println("-".repeat(60));
+            
+            results.add(result);
+        }
+
         // Calcular costo total
+        System.out.println("COSTO TOTAL MTF: " + totalCost);
+        System.out.println("=".repeat(60));
+        
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("sequence", sequence);
+        resultMap.put("totalCost", totalCost);
+        resultMap.put("details", results);
         // Retornar resumen completo
-      return null;
+      return resultMap;
     }
     
     /**
@@ -71,21 +112,5 @@ class MTFAlgorithm {
     public List<Integer> getCurrentList() {
       return currentList;
         // Retornar copia de la lista actual
-    }
-}
-
-/**
- * Clase auxiliar para almacenar resultados de cada acceso
- */
-class AccessResult {
-    public int element;           // Elemento accedido
-    public int cost;             // Costo del acceso
-    public List<Integer> listConfig;  // Configuración de lista después del acceso
-    
-    /**
-     * Propósito: Constructor para crear un resultado de acceso
-     */
-    public AccessResult(int element, int cost, List<Integer> listConfig) {
-        // Inicializar campos del resultado
     }
 }
