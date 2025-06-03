@@ -15,9 +15,9 @@ class IMTFAlgorithm {
    * Propósito: Inicializar el algoritmo con una lista base
    */
   public IMTFAlgorithm(List<Integer> initialList) {
-    // Crear copia de la lista inicial
-    // Inicializar historial de accesos
-    // Llamar a reset para configurar estado inicial
+    this.initialList = new ArrayList<>(initialList); // Crear copia de la lista inicial
+    this.accessHistory = new ArrayList<>(); // Inicializar historial de accesos
+    reset(); // Llamar a reset para configurar estado inicial
   }
   
   /**
@@ -25,9 +25,9 @@ class IMTFAlgorithm {
    * Restaura la lista original y limpia todas las estadísticas
    */
   public void reset() {
-    // Restaurar lista a configuración inicial
-    // Reiniciar costo total a 0
-    // Limpiar historial de accesos
+    this.currentList = new ArrayList<>(initialList); // Restaurar lista a configuración inicial
+    this.totalCost = 0; // Reiniciar costo total a 0
+    this.accessHistory.clear(); // Limpiar historial de accesos
   }
   
   /**
@@ -38,9 +38,18 @@ class IMTFAlgorithm {
    */
   private boolean shouldMoveToFront(int element, int position, List<Integer> sequence, int currentIndex) {
     // Calcular cuántos elementos revisar hacia adelante (position - 1)
+    int lookaheadCount = position - 1;
     // Verificar si el elemento aparece en los siguientes accesos
+    if (lookaheadCount <= 0) {
+      return true; // Si está en posición 1, ya está al frente
+    }
     // Retornar decisión basada en el análisis look-ahead
-    return (Boolean) null;
+    for (int i = 1; i <= lookaheadCount && (currentIndex + i) < sequence.size(); i++) {
+      if (sequence.get(currentIndex + i).equals(element)) {
+          return true;
+      }
+    }
+    return false;
   }
   
   /**
