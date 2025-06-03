@@ -48,9 +48,23 @@ class SequenceAnalyzer {
    */
   public Map<String, Object> findWorstCaseSequence(int length) {
     // Generar secuencia del peor caso (patrón de acceso en orden reverso)
+    List<Integer> worstSequence = new ArrayList<>();
+    for (int i = 0; i < length; i++) {
+          // Crear patrón reverso: 4,3,2,1,0,4,3,2,1,0...
+          int index = (listSize - 1) - (i % listSize);
+          worstSequence.add(initialList.get(index));
+    }
     // Ejecutar MTF con la secuencia generada
+            
+    MTFAlgorithm mtf = new MTFAlgorithm(initialList);
+    Map<String, Object> result = mtf.processSequence(worstSequence);
+    
     // Calcular y retornar resultado del análisis
-    return null;
+    Map<String, Object> analysisResult = new HashMap<>();
+      analysisResult.put("sequence", worstSequence);
+      analysisResult.put("cost", result.get("totalCost"));
+      
+    return analysisResult;
   }
   
   /**
