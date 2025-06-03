@@ -91,25 +91,25 @@ public class Main {
      
 
     // Análisis de mejora IMTF vs MTF
-        System.out.println("\n" + "=".repeat(80));
-        System.out.println("ANÁLISIS DE MEJORA IMTF vs MTF");
-        System.out.println("=".repeat(80));
-        
-        int mtfMinCost = (Integer) minResult.get("cost");
-        int imtfMinCost = (Integer) imtfMinResult.get("totalCost");
-        double improvementMin = ((double)(mtfMinCost - imtfMinCost) / mtfMinCost) * 100;
-        
-        int mtfWorstCost = (Integer) worstResult.get("cost");
-        int imtfWorstCost = (Integer) imtfWorstResult.get("totalCost");
-        double improvementWorst = ((double)(mtfWorstCost - imtfWorstCost) / mtfWorstCost) * 100;
-        
-        int mtfMixedCost = (Integer) mtfMixedResult.get("totalCost");
-        int imtfMixedCost = (Integer) imtfMixedResult.get("totalCost");
-        double improvementMixed = ((double)(mtfMixedCost - imtfMixedCost) / mtfMixedCost) * 100;
-        
-        System.out.printf("Mejora IMTF en secuencia mínima: %.2f%%\n", improvementMin);
-        System.out.printf("Mejora IMTF en secuencia peor caso: %.2f%%\n", improvementWorst);
-        System.out.printf("Mejora IMTF en secuencia mixta: %.2f%%\n", improvementMixed);
-        
+    System.out.println("\n" + "=".repeat(80));
+    System.out.println("ANÁLISIS DE MEJORA IMTF vs MTF");
+    System.out.println("=".repeat(80));
+    
+    int mtfMinCost = (Integer) minResult.get("cost");
+    int imtfMinCost = (Integer) imtfMinResult.get("totalCost");
+    double improvementMin = ((double)(mtfMinCost - imtfMinCost) / mtfMinCost) * 100;
+    
+    int mtfWorstCost = (Integer) worstResult.get("cost");
+    int imtfWorstCost = (Integer) imtfWorstResult.get("totalCost");
+    double improvementWorst = ((double)(mtfWorstCost - imtfWorstCost) / mtfWorstCost) * 100;
+    
+    int mtfMixedCost = (Integer) mtfMixedResult.get("totalCost");
+    int imtfMixedCost = (Integer) imtfMixedResult.get("totalCost");
+    double improvementMixed = ((double)(mtfMixedCost - imtfMixedCost) / mtfMixedCost) * 100;
+    
+    System.out.printf("Mejora IMTF en secuencia mínima: %.2f%%\n", improvementMin);
+    System.out.printf("Mejora IMTF en secuencia peor caso: %.2f%%\n", improvementWorst);
+    System.out.printf("Mejora IMTF en secuencia mixta: %.2f%%\n", improvementMixed);
+    
   }
 }
