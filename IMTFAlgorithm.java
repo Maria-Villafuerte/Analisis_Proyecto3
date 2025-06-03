@@ -59,12 +59,27 @@ class IMTFAlgorithm {
    */
   public AccessResult accessElement(int element, List<Integer> sequence, int currentIndex) {
     // Verificar que el elemento existe en la lista
+    if (!currentList.contains(element)) {
+      throw new IllegalArgumentException("Elemento " + element + " no está en la lista");
+    }
     // Encontrar posición actual del elemento
-    // Calcular costo de acceso
+    int position = currentList.indexOf(element) + 1;
+    int accessCost = position;     // Calcular costo de acceso
+    boolean moved = false;
+
     // Usar shouldMoveToFront para decidir si mover
+    if (shouldMoveToFront(element, position, sequence, currentIndex)) {
+      currentList.remove(Integer.valueOf(element));
+      currentList.add(0, element);
+      moved = true;
+    }
     // Actualizar lista solo si se decide mover
     // Actualizar estadísticas y crear resultado
-    return null;
+    totalCost += accessCost;
+    AccessResult result = new AccessResult(element, accessCost, currentList, moved);
+    accessHistory.add(result);
+      
+    return result;
   }
   
   /**
@@ -74,12 +89,38 @@ class IMTFAlgorithm {
    */
   public Map<String, Object> processSequence(List<Integer> sequence) {
     // Reiniciar algoritmo
+    reset();
+    List<AccessResult> results = new ArrayList<>();
+    System.out.println("Lista inicial: " + currentList);
+    System.out.println("-".repeat(70));
+    
     // Procesar cada elemento con su índice para look-ahead
-    // Mostrar resultados detallados paso a paso
-    // Mostrar si cada elemento fue movido o no
+    for (int i = 0; i < sequence.size(); i++) {
+      int element = sequence.get(i);
+      AccessResult result = accessElement(element, sequence, i);
+      // Mostrar resultados detallados paso a paso
+      System.out.println("Solicitud " + (i + 1) + ": " + element);
+      System.out.println("Costo de acceso: " + result.cost);
+      System.out.println("Movido al frente: " + (result.moved ? "Sí" : "No"));     // Mostrar si cada elemento fue movido o no
+      System.out.println("Nueva configuración: " + result.listConfig);
+      System.out.println("-".repeat(70));
+      
+      results.add(result);
+    }
+    
+
     // Calcular y mostrar costo total
+    System.out.println("COSTO TOTAL IMTF: " + totalCost);
+    System.out.println("=".repeat(70));
+    
+    Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("sequence", sequence);
+    resultMap.put("totalCost", totalCost);
+    resultMap.put("details", results);
+    
+    
     // Retornar resumen completo
-    return null;
+    return resultMap;
   }
   
   /**
