@@ -35,9 +35,9 @@ class SequenceAnalyzer {
         
     // Calcular y retornar resultado del análisis
     Map<String, Object> analysisResult = new HashMap<>();
-      analysisResult.put("sequence", optimalSequence);
-      analysisResult.put("cost", result.get("totalCost"));
-      
+    analysisResult.put("sequence", optimalSequence);
+    analysisResult.put("cost", result.get("totalCost"));
+    
     return analysisResult;
   }
   
@@ -61,8 +61,8 @@ class SequenceAnalyzer {
     
     // Calcular y retornar resultado del análisis
     Map<String, Object> analysisResult = new HashMap<>();
-      analysisResult.put("sequence", worstSequence);
-      analysisResult.put("cost", result.get("totalCost"));
+    analysisResult.put("sequence", worstSequence);
+    analysisResult.put("cost", result.get("totalCost"));
       
     return analysisResult;
   }
@@ -74,8 +74,19 @@ class SequenceAnalyzer {
    */
   public Map<String, Object> analyzeRepetitionPattern(int element, int repetitions) {
     // Generar secuencia con repeticiones del elemento especificado
+    List<Integer> sequence = new ArrayList<>();
+    for (int i = 0; i < repetitions; i++) {
+        sequence.add(element);
+    }
     // Ejecutar MTF con la secuencia generada
+    MTFAlgorithm mtf = new MTFAlgorithm(initialList);
+    Map<String, Object> result = mtf.processSequence(sequence);
+      
     // Calcular y retornar resultado del análisis de repetición
-    return null;
+    Map<String, Object> analysisResult = new HashMap<>();
+    analysisResult.put("sequence", sequence);
+    analysisResult.put("cost", result.get("totalCost"));
+    
+    return analysisResult;
   }
 }
